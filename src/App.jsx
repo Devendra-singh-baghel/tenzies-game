@@ -1,9 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import Confetti from 'react-confetti'
 import Die from "./components/Die";
+import Die3D from "./components/Die3D";
 
 function App() {
   const [dice, setDice] = useState(() => generateAllNewDice());
+  const [isRolling, setIsRolling] = useState(false);
   const buttonRef = useRef(null);
 
   const gameWon = dice.every((die) => die.isHeld) &&
@@ -13,7 +15,9 @@ function App() {
     if (gameWon) {
       buttonRef.current.focus();
     }
-  }, [gameWon])
+  }, [gameWon]);
+
+
   function generateAllNewDice() {
     return new Array(10)
       .fill(0)
@@ -26,9 +30,15 @@ function App() {
 
   const rollDie = () => {
     if (!gameWon) {
-      setDice((oldDie) =>
-        oldDie.map((die) =>
-          die.isHeld ? die : { ...die, value: Math.ceil(Math.random() * 6) }));
+      setIsRolling(true);
+
+      setTimeout(() => {
+        setDice((oldDie) =>
+          oldDie.map((die) =>
+            die.isHeld ? die : { ...die, value: Math.ceil(Math.random() * 6) }));
+
+        setIsRolling(false);
+      }, 600);
     } else {
       setDice(generateAllNewDice());
     }
@@ -66,17 +76,30 @@ function App() {
           <p className="text-sm text-gray-600">Roll untill all dies are the same. Click each die to freeze it at its current value between rolls.</p>
         </div>
 
-        <div className="grid grid-cols-5 gap-5 p-2">
-          {dice.map((diecObj) => (
-            <Die
-              key={diecObj.id}
-              value={diecObj.value}
-              className={diecObj.isHeld ? `bg-green-400` : `bg-white focus:outline-2 focus:outline-blue-300 hover:bg-gray-100 duration-300`}
-              hold={() => hold(diecObj.id)}
-              isHeld={diecObj.isHeld}
-            />
-          ))}
-        </div>
+        {
+          gameWon ?
+            <div className="text-green-600 text-xl text-center font-bold px-12">
+              <p className="space-x-2">
+                <span>Congratulations!</span>
+                <span className="text-indigo-700 font-extrabold">You won!</span>
+                <span>Press</span>
+                <span className="text-orange-700 font-extrabold">"New Game"</span>
+                <span>to start again.</span>
+              </p>
+            </div>
+            :
+            <div className="grid grid-cols-5 gap-5">
+              {dice.map((diecObj) => (
+                <Die3D
+                  key={diecObj.id}
+                  value={diecObj.value}
+                  hold={() => hold(diecObj.id)}
+                  isHeld={diecObj.isHeld}
+                  isRolling={isRolling}
+                />
+              ))}
+            </div>
+        }
 
         <button
           onClick={rollDie}
@@ -95,5 +118,4 @@ export default App;
 
 /*
 1. Add a timer and a roll counter to see how quickly you can win the game.
-2. Style the dice to look like real dice with pips insted of numbers.
 */
