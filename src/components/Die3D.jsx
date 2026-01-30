@@ -1,11 +1,11 @@
 import React from "react";
 import DiceFace from "./DieFace";
 
-function Die3D({ value, isHeld, isRolling, hold }) {
+function Die3D({ value, isHeld, isRolling, hold, className }) {
     return (
         <div className="dice-3d" onClick={hold}>
             <div
-                className={`dice-cube ${isHeld ? "bg-green-400" : "bg-white"}`}
+                className={`dice-cube`}
                 style={{
                     transform: isRolling && !isHeld
                         ? "rotateX(720deg) rotateY(360deg)"
@@ -16,12 +16,12 @@ function Die3D({ value, isHeld, isRolling, hold }) {
                 aria-pressed={isHeld}
                 aria-label={`Die with value ${value}, ${isHeld ? "held" : "not held"}`}
             >
-                <div className={`dice-face face-1 ${isHeld ? "bg-green-400" : "bg-gray-300"}`}><DiceFace value={value} /></div>
-                <div className={`dice-face face-2 ${isHeld ? "bg-green-400" : "bg-gray-300"}`}><DiceFace value={value} /></div>
-                <div className={`dice-face face-3 ${isHeld ? "bg-green-400" : "bg-gray-300"}`}><DiceFace value={value} /></div>
-                <div className={`dice-face face-4 ${isHeld ? "bg-green-400" : "bg-gray-300"}`}><DiceFace value={value} /></div>
-                <div className={`dice-face face-5 ${isHeld ? "bg-green-400" : "bg-gray-300"}`}><DiceFace value={value} /></div>
-                <div className={`dice-face face-6 ${isHeld ? "bg-green-400" : "bg-gray-300"}`}><DiceFace value={value} /></div>
+                <div className={`dice-face face-1 ${className}`}><DiceFace value={value} /></div>
+                <div className={`dice-face face-2 ${className}`}><DiceFace value={value} /></div>
+                <div className={`dice-face face-3 ${className}`}><DiceFace value={value} /></div>
+                <div className={`dice-face face-4 ${className}`}><DiceFace value={value} /></div>
+                <div className={`dice-face face-5 ${className}`}><DiceFace value={value} /></div>
+                <div className={`dice-face face-6 ${className}`}><DiceFace value={value} /></div>
             </div>
         </div>
     );

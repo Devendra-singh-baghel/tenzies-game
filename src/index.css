@@ -58,3 +58,22 @@ body {
 .face-6 {
   transform: rotateX(-90deg) translateZ(1.5rem);
 }
+
+.invalid {
+  animation: blinkRed 0.3s;
+}
+
+@keyframes blinkRed {
+  0% {
+    background-color: red;
+    transform: scale(1);
+  }
+  50% {
+    background-color: darkred;
+    transform: scale(1.1);
+  }
+  100% {
+    background-color: red;
+    transform: scale(1);
+  }
+}
