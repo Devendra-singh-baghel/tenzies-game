@@ -91,7 +91,7 @@ Players must:
 
 ## Setup Instructions
 
-To run MealMate locally:
+To run Tenzies game locally:
 
 1. Clone the repository:
 ```bash
